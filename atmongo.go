@@ -16,8 +16,8 @@ func MongoConnect(mconn DBInfo) (db *mongo.Database) {
 	return client.Database(mconn.DBName)
 }
 
-func InsertOneDoc(mconn DBInfo, collection string, doc interface{}) (insertedID interface{}) {
-	insertResult, err := MongoConnect(mconn).Collection(collection).InsertOne(context.TODO(), doc)
+func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (insertedID interface{}) {
+	insertResult, err := db.Collection(collection).InsertOne(context.TODO(), doc)
 	if err != nil {
 		fmt.Printf("AIteung Mongo, InsertOneDoc: %v\n", err)
 	}
