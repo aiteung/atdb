@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/aiteung/atmodel"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -22,4 +24,12 @@ func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (inser
 		fmt.Printf("AIteung Mongo, InsertOneDoc: %v\n", err)
 	}
 	return insertResult.InsertedID
+}
+
+func GetOneDoc(db *mongo.Database, collection string, filter bson.M) (notif atmodel.Notif) {
+	err := db.Collection(collection).FindOne(context.TODO(), filter).Decode(&notif)
+	if err != nil {
+		fmt.Printf("GetNotifFromPhoneNumber: %v\n", err)
+	}
+	return
 }
