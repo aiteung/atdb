@@ -33,3 +33,11 @@ func GetOneDoc(db *mongo.Database, collection string, filter bson.M) (notif atmo
 	}
 	return
 }
+
+func DeleteOneDoc(db *mongo.Database, collection string, filter bson.M) (result *mongo.DeleteResult) {
+	result, err := db.Collection(collection).DeleteOne(context.TODO(), filter)
+	if err != nil {
+		fmt.Printf("GetNotifFromPhoneNumber: %v\n", err)
+	}
+	return
+}
