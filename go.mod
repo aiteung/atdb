@@ -3,7 +3,6 @@ module github.com/aiteung/atdb
 go 1.19
 
 require (
-	github.com/aiteung/atmodel v0.0.2
 	github.com/go-sql-driver/mysql v1.7.0
 	go.mongodb.org/mongo-driver v1.11.1
 )

@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aiteung/atmodel"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -26,8 +25,8 @@ func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (inser
 	return insertResult.InsertedID
 }
 
-func GetOneDoc(db *mongo.Database, collection string, filter bson.M) (notif atmodel.Notif) {
-	err := db.Collection(collection).FindOne(context.TODO(), filter).Decode(&notif)
+func GetOneDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc T) {
+	err := db.Collection(collection).FindOne(context.TODO(), filter).Decode(&doc)
 	if err != nil {
 		fmt.Printf("GetNotifFromPhoneNumber: %v\n", err)
 	}
