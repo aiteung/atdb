@@ -28,7 +28,15 @@ func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (inser
 func GetOneDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc T) {
 	err := db.Collection(collection).FindOne(context.TODO(), filter).Decode(&doc)
 	if err != nil {
-		fmt.Printf("GetNotifFromPhoneNumber: %v\n", err)
+		fmt.Printf("GetOneDoc: %v\n", err)
+	}
+	return
+}
+
+func ReplaceOneDoc(db *mongo.Database, collection string, filter bson.M, doc interface{}) (updatereseult *mongo.UpdateResult) {
+	updatereseult, err := db.Collection(collection).ReplaceOne(context.TODO(), filter, doc)
+	if err != nil {
+		fmt.Printf("ReplaceOneDoc: %v\n", err)
 	}
 	return
 }
@@ -36,7 +44,7 @@ func GetOneDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc
 func DeleteOneDoc(db *mongo.Database, collection string, filter bson.M) (result *mongo.DeleteResult) {
 	result, err := db.Collection(collection).DeleteOne(context.TODO(), filter)
 	if err != nil {
-		fmt.Printf("GetNotifFromPhoneNumber: %v\n", err)
+		fmt.Printf("DeleteOneDoc: %v\n", err)
 	}
 	return
 }
