@@ -33,6 +33,20 @@ func GetOneDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc
 	return
 }
 
+func GetAllDoc[T any](db *mongo.Database, collection string) (doc T) {
+	ctx := context.TODO()
+	cur, err := db.Collection(collection).Find(ctx, bson.M{})
+	if err != nil {
+		fmt.Printf("GetAllDoc: %v\n", err)
+	}
+	defer cur.Close(ctx)
+	err = cur.All(ctx, &doc)
+	if err != nil {
+		fmt.Printf("GetAllDoc Cursor Err: %v\n", err)
+	}
+	return
+}
+
 func ReplaceOneDoc(db *mongo.Database, collection string, filter bson.M, doc interface{}) (updatereseult *mongo.UpdateResult) {
 	updatereseult, err := db.Collection(collection).ReplaceOne(context.TODO(), filter, doc)
 	if err != nil {
