@@ -62,3 +62,11 @@ func DeleteOneDoc(db *mongo.Database, collection string, filter bson.M) (result 
 	}
 	return
 }
+
+func DeleteDoc(db *mongo.Database, collection string, filter bson.M) (result *mongo.DeleteResult) {
+	result, err := db.Collection(collection).DeleteMany(context.TODO(), filter)
+	if err != nil {
+		fmt.Printf("DeleteDoc : %v\n", err)
+	}
+	return
+}
