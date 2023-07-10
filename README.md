@@ -10,6 +10,11 @@ var dbmongoinfo = atdb.DBInfo{
 var mongocon = atdb.MongoConnect(dbmongoinfo)
 atdb.InsertOneDoc(mongocon, "skt", surat1)
 ```
+get data
+```go
+filter := bson.M{"username": email}
+usercred := atdb.GetOneDoc[UserCred](Awanggamongoconn, "user", filter)
+```
 
 ## Dev
 
