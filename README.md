@@ -1,6 +1,15 @@
-# atmongo
+# atdb
 
-mongo db helper
+mongo db helper example
+
+```go
+var dbmongoinfo = atdb.DBInfo{
+	DBString: os.Getenv("MONGOSTRING"),
+	DBName:   "iteung",
+}
+var mongocon = atdb.MongoConnect(dbmongoinfo)
+atdb.InsertOneDoc(mongocon, "skt", surat1)
+```
 
 ## Dev
 
