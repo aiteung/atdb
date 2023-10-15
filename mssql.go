@@ -10,7 +10,7 @@ import (
 func MssqlConnect(mssqlconn DBInfo) (db *sql.DB) {
 	db, err := sql.Open("mssql", mssqlconn.DBString)
 	if err != nil {
-		panic(fmt.Errorf("MssqlConnect: %v\n", err))
+		panic(fmt.Sprintf("MssqlConnect: %v\n", err))
 	}
 	return db
 

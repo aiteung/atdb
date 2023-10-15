@@ -10,7 +10,7 @@ import (
 func MariaConnect(mariaconn DBInfo) (db *sql.DB) {
 	db, err := sql.Open("mysql", mariaconn.DBString+mariaconn.DBName)
 	if err != nil {
-		panic(fmt.Errorf("MariaConnect: %v\n", err))
+		panic(fmt.Sprintf("MariaConnect: %v\n", err))
 	}
 	return db
 

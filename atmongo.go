@@ -47,6 +47,15 @@ func GetAllDoc[T any](db *mongo.Database, collection string) (doc T) {
 	return
 }
 
+func GetAllDistinctDoc(db *mongo.Database, filter bson.M, fieldname, collection string) (doc []any) {
+	ctx := context.TODO()
+	doc, err := db.Collection(collection).Distinct(ctx, fieldname, filter)
+	if err != nil {
+		fmt.Printf("GetAllDistinctDoc: %v\n", err)
+	}
+	return
+}
+
 func ReplaceOneDoc(db *mongo.Database, collection string, filter bson.M, doc interface{}) (updatereseult *mongo.UpdateResult) {
 	updatereseult, err := db.Collection(collection).ReplaceOne(context.TODO(), filter, doc)
 	if err != nil {
