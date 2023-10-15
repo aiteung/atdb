@@ -33,6 +33,15 @@ func GetOneDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc
 	return
 }
 
+func GetOneLatestDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc T, err error) {
+	opts := options.FindOne().SetSort(bson.M{"$natural": -1})
+	err = db.Collection(collection).FindOne(context.TODO(), filter, opts).Decode(&doc)
+	if err != nil {
+		return
+	}
+	return
+}
+
 func GetAllDoc[T any](db *mongo.Database, collection string) (doc T) {
 	ctx := context.TODO()
 	cur, err := db.Collection(collection).Find(ctx, bson.M{})
