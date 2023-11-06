@@ -89,9 +89,11 @@ func DeleteDoc(db *mongo.Database, collection string, filter bson.M) (result *mo
 }
 
 func GetRandomDoc[T any](db *mongo.Database, collection string, size uint) (result []T, err error) {
-	filter := bson.M{"$sample": bson.M{"size": size}}
+	filter := mongo.Pipeline{
+		{{"$sample", bson.D{{"size", size}}}},
+	}
 	ctx := context.Background()
-	cursor, err := db.Collection(collection).Find(ctx, filter)
+	cursor, err := db.Collection(collection).Aggregate(ctx, filter)
 	if err != nil {
 		return
 	}
