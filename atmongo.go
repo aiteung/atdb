@@ -3,7 +3,6 @@ package atdb
 import (
 	"context"
 	"fmt"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -86,5 +85,18 @@ func DeleteDoc(db *mongo.Database, collection string, filter bson.M) (result *mo
 	if err != nil {
 		fmt.Printf("DeleteDoc : %v\n", err)
 	}
+	return
+}
+
+func GetRandomDoc[T any](db *mongo.Database, collection string, size uint) (result []T, err error) {
+	filter := bson.M{"$sample": bson.M{"size": size}}
+	ctx := context.Background()
+	cursor, err := db.Collection(collection).Find(ctx, filter)
+	if err != nil {
+		return
+	}
+
+	err = cursor.All(ctx, &result)
+
 	return
 }
