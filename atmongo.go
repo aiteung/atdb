@@ -3,6 +3,7 @@ package atdb
 import (
 	"context"
 	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -41,9 +42,9 @@ func GetOneLatestDoc[T any](db *mongo.Database, collection string, filter bson.M
 	return
 }
 
-func GetAllDoc[T any](db *mongo.Database, collection string) (doc T) {
+func GetAllDoc[T any](db *mongo.Database, collection string, filter bson.M) (doc T) {
 	ctx := context.TODO()
-	cur, err := db.Collection(collection).Find(ctx, bson.M{})
+	cur, err := db.Collection(collection).Find(ctx, filter)
 	if err != nil {
 		fmt.Printf("GetAllDoc: %v\n", err)
 	}
