@@ -79,7 +79,7 @@ func GetAllDistinctDoc(db *mongo.Database, filter bson.M, fieldname, collection 
 	return
 }
 
-func UpdateDoc(db *mongo.Database, collection string, filter bson.D, updatefield bson.D) (updateresult *mongo.UpdateResult, err error) {
+func UpdateDoc(db *mongo.Database, collection string, filter bson.M, updatefield bson.M) (updateresult *mongo.UpdateResult, err error) {
 	updateresult, err = db.Collection(collection).UpdateOne(context.TODO(), filter, updatefield)
 	return
 }
